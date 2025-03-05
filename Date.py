@@ -13,6 +13,7 @@ Features:
 - Calculate the difference between two dates with output in days, months, years, weeks, hours, minutes, and seconds
 - Given a date, determine the corresponding day of the week
 - Add days, months, or years to a date
+- Remove days, months, or years to a date
 - Validate date existence and format
 - Includes three custom error classes for exception handling
 - Compare two dates to determine whether one is greater than, less than, or equal to the other
@@ -284,6 +285,26 @@ class Date:
                 self.__set_date(new_day+"-"+new_month+"-"+str(self.year))
             month += 1
 
+    def remove_months(self, months: int) -> None:
+        """
+        Removes the specified number of months to the current date.
+        :param months: The number of months to remove to the date.
+        :return: None. The original date is modified in place.
+        """
+        if type(months) == str or months < 0: raise InvalidDateRemove(months)
+        month = 1
+        while month <= months:
+            if self.month == 1:
+                self.remove_years(1)
+                new_day= "0"+str(self.day) if len(str(self.day)) == 1 else str(self.day)
+                self.__set_date(new_day+"-"+"12"+"-"+str(self.year))
+            else:
+                new_month = str(self.month-1)
+                new_day = "0" + str(self.day) if len(str(self.day)) == 1 else str(self.day)
+                if len(new_month) == 1: new_month = "0"+new_month
+                self.__set_date(new_day+"-"+new_month+"-"+str(self.year))
+            month += 1
+
     def add_days(self, days: int) -> None:
         """
         Adds the specified number of days to the current date.
@@ -298,6 +319,24 @@ class Date:
                 self.__set_date("01"+"-"+self.__date[3:5]+"-"+str(self.year))
             else:
                 new_day = str(self.day+1)
+                if len(new_day) == 1: new_day = "0"+new_day
+                self.__set_date(new_day+"-"+self.__date[3:5]+"-"+str(self.year))
+            day += 1
+
+    def remove_days(self, days: int) -> None:
+        """
+        Removes the specified number of days to the current date.
+        :param days: The number of days to remove to the date.
+        :return: None. The original date is modified in place.
+        """
+        if type(days) == str or days < 0: raise InvalidDateRemove(days)
+        day = 1
+        while day <= days:
+            if self.day == 1:
+                self.remove_months(1)
+                self.__set_date(str(from_month_to_days(self.year, self.month))+"-"+self.__date[3:5]+"-"+str(self.year))
+            else:
+                new_day = str(self.day-1)
                 if len(new_day) == 1: new_day = "0"+new_day
                 self.__set_date(new_day+"-"+self.__date[3:5]+"-"+str(self.year))
             day += 1

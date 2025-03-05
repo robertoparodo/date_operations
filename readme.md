@@ -21,8 +21,8 @@ Additionally, the library enforces a strict four-digit year format, meaning that
   - Minutes
   - Seconds
 - Determine the day of the week for a given date.
-- Add days, months, or years to a date.
-- Remove years to a date.
+- Add days, months, or years to a date. 
+- Remove days, months, or years to a date
 - Validate date existence and format.
 - Compare two dates to check if one is greater than, less than, or equal to the other.
 - Includes three custom error classes for better exception handling.
