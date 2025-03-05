@@ -249,8 +249,19 @@ class Date:
         :param years: The number of years to add to the date.
         :return: None. The original date is modified in place.
         """
-        if type(years) == str or years < 0: raise InvalidDateAdd(years)
+        if type(years) == str or years < 0 or len(str(self.year+years))>=5: raise InvalidDateAdd(years)
         new_year = str(self.year+years)
+        self.__set_date(self.__date[:6]+new_year)
+
+    def remove_years(self, years: int) -> None:
+        """
+        Removes the specified number of years to the current date.
+        :param years: The number of years to remove to the date.
+        :return: None. The original date is modified in place.
+        """
+        if type(years) == str or years < 0 or self.year < years: raise InvalidDateRemove(years)
+        new_year = str(self.year-years)
+        if len(new_year) < 4: new_year = "0"*(4-len(new_year))+new_year
         self.__set_date(self.__date[:6]+new_year)
 
     def add_months(self, months: int) -> None:
@@ -264,11 +275,13 @@ class Date:
         while month <= months:
             if self.month == 12:
                 self.add_years(1)
-                self.__set_date(str(self.day)+"-"+"01"+"-"+str(self.year))
+                new_day= "0"+str(self.day) if len(str(self.day)) == 1 else str(self.day)
+                self.__set_date(new_day+"-"+"01"+"-"+str(self.year))
             else:
                 new_month = str(self.month+1)
+                new_day = "0" + str(self.day) if len(str(self.day)) == 1 else str(self.day)
                 if len(new_month) == 1: new_month = "0"+new_month
-                self.__set_date(str(self.day)+"-"+new_month+"-"+str(self.year))
+                self.__set_date(new_day+"-"+new_month+"-"+str(self.year))
             month += 1
 
     def add_days(self, days: int) -> None:
@@ -411,4 +424,8 @@ class InvalidDateError(Exception):
 
 class InvalidDateAdd(Exception):
     def __init__(self, date):
-        super().__init__(f"Invalid date: '{date}'. Cannot add negative numbers or strings.")
+        super().__init__(f"Invalid date: '{date}'. Cannot add negative numbers, strings or an excessively large number of years.")
+
+class InvalidDateRemove(Exception):
+    def __init__(self, date):
+        super().__init__(f"Invalid date: '{date}'. Cannot add negative numbers, strings or years larger than the date.")

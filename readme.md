@@ -1,7 +1,9 @@
 # Advanced Date Management Library
 
 ## Overview
-This library provides a set of powerful and easy-to-use methods for handling dates efficiently, using the Italian date format **dd-mm-yyyy**.
+This library provides a set of powerful and easy-to-use methods for handling dates efficiently, using the Italian date format dd-mm-yyyy. 
+It operates within the limits of the modern **Gregorian calendar** and does not support dates before year 1 AD. 
+Additionally, the library enforces a strict four-digit year format, meaning that any attempt to input a year with five or more digits will result in an exception.
 
 ## Features
 - Extract day, month, and year from a given date.
@@ -20,6 +22,7 @@ This library provides a set of powerful and easy-to-use methods for handling dat
   - Seconds
 - Determine the day of the week for a given date.
 - Add days, months, or years to a date.
+- Remove years to a date.
 - Validate date existence and format.
 - Compare two dates to check if one is greater than, less than, or equal to the other.
 - Includes three custom error classes for better exception handling.
