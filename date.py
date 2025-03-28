@@ -23,6 +23,7 @@ It offers greater simplicity compared to the standard datetime module.
 
 Author: Roberto Parodo
 """
+from custom_exceptions import InvalidDateError, InvalidDateFormatError, InvalidDateRemove, InvalidDateAdd
 import re, os
 
 CALENDAR = {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
@@ -103,6 +104,14 @@ class Date:
         :return: full date in string format
         """
         return self.get_weekday()+" "+str(self.day)+" "+CALENDAR[self.month]+" "+str(self.year)
+
+    @property
+    def century(self) -> int:
+        """
+        Returns the century in which the year is located
+        :return: the century
+        """
+        return ((self.year-1)//100) + 1
 
     def copy(self):
         """
@@ -451,20 +460,3 @@ class Date:
         :return: A string that describes the current object in string format.
         """
         return self.__date
-
-
-class InvalidDateFormatError(Exception):
-    def __init__(self, date):
-        super().__init__(f"Invalid date format: '{date}'. Use the format: 'dd-mm-yyyy'.")
-
-class InvalidDateError(Exception):
-    def __init__(self, date):
-        super().__init__(f"Invalid date: '{date}'. Doesn't exist.")
-
-class InvalidDateAdd(Exception):
-    def __init__(self, date):
-        super().__init__(f"Invalid date: '{date}'. Cannot add negative numbers, strings or an excessively large number of years.")
-
-class InvalidDateRemove(Exception):
-    def __init__(self, date):
-        super().__init__(f"Invalid date: '{date}'. Cannot add negative numbers, strings or years larger than the date.")
