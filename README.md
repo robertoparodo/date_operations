@@ -51,6 +51,12 @@ print(other_date.minutes_between(casual_date))  # Output: 24389280
 print(other_date.second_between(casual_date))  # Output: 1463356800
 
 print(casual_date.get_weekday())  # Monday
+
+casual_date.add_days(100)
+print(casual_date) # Output: 03-05-2000
+
+casual_date.remove_days(100)
+print(casual_date) # Output: 24-01-2000
 ```
 ## Author
 Roberto Parodo
