@@ -1,0 +1,8 @@
+[project]
+name = "date_operations"
+version = "0.1.0"
+description = "A set of powerful and easy-to-use methods for handling dates efficiently"
+authors = [{name = "Roberto Parodo", email = "parodo.roberto@gmail.com"}]
+readme = "README.md"
+license = {text = "MIT"}
+dependencies = []

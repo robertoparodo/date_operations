@@ -1,4 +1,4 @@
-from date import Date
+from date_operations.date import Date
 
 
 if __name__ == '__main__':
